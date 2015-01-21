@@ -11,19 +11,21 @@ def latest_cost
 end
 
 def rss(data)
-  RSS::Maker.make("atom") do |maker|
+  RSS::Maker.make("2.0") do |maker|
     last_modified_time = Time.parse data.lastModifiedTime
 
+    maker.channel.language = "en"
     maker.channel.author = "Allen Zheng"
     maker.channel.updated = last_modified_time.to_s
-    maker.channel.about = "http://mapclipper.com/feeds/cost.rss"
+    maker.channel.link = "http://mapclipper.com/feeds/cost.rss"
     maker.channel.title = "AWS Cost Feed"
-
+    maker.channel.description = "AWS Cost Feed"
   
     maker.items.new_item do |item|
-      item.link = "http://mapclipper.com/aws_cost/#{last_modified_time.to_i}"
+      link = "http://mapclipper.com/aws_cost/#{last_modified_time.to_i}"
+      item.link = link
+      item.guid.content = link
       item.title = "AWS Cost $#{data.totalCost} @ #{last_modified_time}"
-      item.summary = "Unitl #{last_modified_time}, your total cost of AWS is $#{data.totalCost}."
       item.updated = last_modified_time.to_s
     end
   end
