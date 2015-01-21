@@ -22,7 +22,7 @@ def rss(data)
   
     maker.items.new_item do |item|
       item.link = "http://mapclipper.com/aws_cost/#{last_modified_time.to_i}"
-      item.title = "AWS Cost @#{last_modified_time}"
+      item.title = "AWS Cost $#{data.totalCost} @ #{last_modified_time}"
       item.summary = "Unitl #{last_modified_time}, your total cost of AWS is $#{data.totalCost}."
       item.updated = last_modified_time.to_s
     end
